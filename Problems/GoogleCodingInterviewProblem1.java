@@ -6,7 +6,6 @@ Youtuber: Clément Mihailescu
 package Problems;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,18 +14,20 @@ import java.util.Set;
 public class GoogleCodingInterviewProblem1 {
 
     private static Map<String, Integer> map;
+    private static Set<Integer> set;
 
-    public static ArrayList<String> interview1(Integer number, String[] words) {
+    /**
+     * O(leangth of alphabet + leangth of phone number
+     * + length of all the characters, time and space)
+     **/
+    public static ArrayList<String> result(Integer number, String[] words) {
 
         createMap();
+        createSet(number);
 
-        Set<Integer> set = new HashSet<>();
-        String stNumber = number.toString();
-        for (int i = 0; i < stNumber.length(); i++) {
-            if (!set.contains(Integer.parseInt(stNumber.substring(i, i + 1))))
-                set.add(Integer.parseInt(stNumber.substring(i, i + 1)));
-        }
-
+        // O(length of all the characters in the words array, time) - worst case
+        // O(length of each first letter of words in the array, time) - best case
+        // O(length of the words array, space) - worst case
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < words.length; i++) {
             for (int j = 0; j < words[i].length(); j++) {
@@ -44,10 +45,11 @@ public class GoogleCodingInterviewProblem1 {
             }
         }
 
-        Collections.sort(result);
         return result;
     }
 
+    // O(leangth of alphabet time)
+    // O(leangth of alphabet space)
     private static void createMap() {
         map = new HashMap<>();
         String st = "abcdefghijklmnopqrstuvwxyz";
@@ -66,10 +68,21 @@ public class GoogleCodingInterviewProblem1 {
         }
     }
 
+    // O(leangth of phone number time)
+    // O(leangth of phone number space - worst case)
+    private static void createSet(Integer number) {
+        set = new HashSet<>();
+        String stNumber = number.toString();
+        for (int i = 0; i < stNumber.length(); i++) {
+            if (!set.contains(Integer.parseInt(stNumber.substring(i, i + 1))))
+                set.add(Integer.parseInt(stNumber.substring(i, i + 1)));
+        }
+    }
+
     public static void main(String[] args) {
         String[] words = new String[] { "foo", "bar", "baz", "foobar", "emo", "cap", "car", "cat" };
         int phoneNum = 3662277;
-        ArrayList<String> result = interview1(phoneNum, words);
+        ArrayList<String> result = result(phoneNum, words);
         System.out.println(result);
     }
 }
