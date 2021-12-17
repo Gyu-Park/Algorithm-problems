@@ -20,15 +20,12 @@ public class TwoSum {
     public static int[] findTwoSum(int[] list, int sum) {
         Map<Integer, Integer> integerMap = new HashMap<>();
         int[] found = new int[2];
-        int index = 0;
         for (int i = 0; i < list.length; i++) {
             if (integerMap.get(list[i]) == null) {
                 integerMap.put(sum - list[i], i);
             } else {
-                found[index] = i;
-                index++;
-                found[index] = integerMap.get(list[i]);
-                index++;
+                found[0] = i;
+                found[1] = integerMap.get(list[i]);
                 return found;
             }
         }
