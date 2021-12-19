@@ -68,43 +68,4 @@ public class AddTwoNumbers {
             this.next = next;
         }
     }
-
-    public static void main(String[] args) {
-        ListNode l1 = new ListNode();
-        ListNode a1 = new ListNode();
-        ListNode a2 = new ListNode();
-        ListNode a3 = new ListNode();
-        ListNode a4 = new ListNode();
-        ListNode a5 = new ListNode();
-        ListNode a6 = new ListNode();
-        l1.val = 9;
-        a1.val = 9;
-        a2.val = 9;
-        a3.val = 9;
-        a4.val = 9;
-        a5.val = 9;
-        a6.val = 9;
-        l1.next = a1;
-        a1.next = a2;
-        a2.next = a3;
-        a3.next = a4;
-        a4.next = a5;
-        a5.next = a6;
-        a6.next = null;
-
-        ListNode l2 = new ListNode();
-        ListNode b1 = new ListNode();
-        ListNode b2 = new ListNode();
-        ListNode b3 = new ListNode();
-        l2.val = 9;
-        b1.val = 9;
-        b2.val = 9;
-        b3.val = 9;
-        l2.next = b1;
-        b1.next = b2;
-        b2.next = b3;
-        b3.next = null;
-
-        ListNode result = addTwoNumbers(l1, l2);
-    }
 }
