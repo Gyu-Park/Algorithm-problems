@@ -34,7 +34,7 @@ public class MaximumDepthOfBinaryTree {
         if (root == null) {
             return 0;
         }
-        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+        return 1 + Math.max(shorterMaxDepth(root.left), shorterMaxDepth(root.right));
     }
 
     public static class TreeNode {
