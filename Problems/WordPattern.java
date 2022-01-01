@@ -44,9 +44,9 @@ public class WordPattern {
         String[] words = str.split(" ");
         if (words.length != pattern.length())
             return false;
-        Map index = new HashMap();
+        Map<String, Integer> index = new HashMap<>();
         for (Integer i = 0; i < words.length; ++i)
-            if (index.put(pattern.charAt(i), i) != index.put(words[i], i))
+            if (index.put(pattern.substring(i, i + 1), i) != index.put(words[i], i))
                 return false;
         return true;
     }
