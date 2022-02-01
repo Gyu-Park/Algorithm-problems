@@ -12,13 +12,28 @@
  */
 package Problems;
 
+import java.util.*;
+
 public class NextGreaterElementI {
-    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+        for (int num : nums2) {
+            while (!stack.isEmpty() && stack.peek() < num)
+                map.put(stack.pop(), num);
+            stack.push(num);
+        }   
+        for (int i = 0; i < nums1.length; i++)
+            nums1[i] = map.getOrDefault(nums1[i], -1);
+        return nums1;
     }
 
     public static void main(String[] args) {
-        int n = 43261596;
-        System.out.println(nextGreaterElement(n));
+        int[] nums1 = {4, 2, 1};
+        int[] nums2 = {2, 1, 3, 4};
+        int[] res = nextGreaterElement(nums1, nums2);
+        for (int i : res) {
+            System.out.print(i + " ");
+        }
     }
 }
