@@ -12,20 +12,30 @@ package Problems;
 
 public class JumpGameII {
     public static int jump(int[] nums) {
-        int tracking = 0;
-        int a = 1;
+        if (nums[0] == 0) {
+            return 0;
+        }
+
+        int lastIndex = nums.length - 1;
+        int jums = 0;
+        while (lastIndex > 0) {
+            lastIndex = findLastNum(nums, lastIndex);
+            jums++;
+        }
+
+        return jums;
     }
 
-    private static int findLastNum(int[] nums) {
+    private static int findLastNum(int[] nums, int lastIndex) {
         for(int i = 0; i < nums.length; i++) {
-            if (nums[i] == nums.length - (i + 1))
+            if (nums[i] >= lastIndex - i)
                 return i;
         }
         return -1;
     }
     
     public static void main(String[] args) {
-        int n = 43261596;
-        System.out.println(jump(n));
+        int[] nums = {2,3,1,1,4};
+        System.out.println(jump(nums));
     }
 }
