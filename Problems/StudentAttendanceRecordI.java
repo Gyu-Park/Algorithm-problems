@@ -15,7 +15,33 @@ package Problems;
 
 public class StudentAttendanceRecordI {
     public static boolean checkRecord(String s) {
+        int absent = 0;
+        int late = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'L') {
+                late++;
+            } else if (s.charAt(i) == 'A') {
+                absent++;
+                late = 0;
+            } else {
+                late = 0;
+            }
 
+            if (late >= 3 || absent >= 2)
+                return false;
+        }
+        return true;
+    }
+
+    // way shorter but slower solution
+    public static boolean anotherCheckRecord(String s) {
+        return !s.matches(".*LLL.*|.*A.*A.*");
+    }
+
+    public static boolean anotherCheckRecord2(String s) {
+        if (s.indexOf("A") != s.lastIndexOf("A") || s.contains("LLL"))
+            return false;
+        return true;
     }
 
     public static void main(String[] args) {
