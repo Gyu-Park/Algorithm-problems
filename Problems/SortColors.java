@@ -10,11 +10,64 @@ package Problems;
 
 public class SortColors {
     public static void sortColors(int[] nums) {
-        
+        if (nums.length > 1) {
+            int halfLen = nums.length / 2;
+            int[] firstHalf = new int[halfLen];
+            System.arraycopy(nums, 0, firstHalf, 0, halfLen);
+            sortColors(firstHalf);
+
+            int secondHalfLen = nums.length - halfLen;
+            int[] secondHalf = new int[secondHalfLen];
+            System.arraycopy(nums, halfLen, secondHalf, 0, secondHalfLen);
+            sortColors(secondHalf);
+
+            merge(firstHalf, secondHalf, nums);
+        }
+    }
+
+    private static void merge(int[] firstHalf, int[] secondHalf, int[] tempArray) {
+        int curFirstHalf = 0;
+        int curSecondHalf = 0;
+        int curtempArray = 0;
+
+        while (curFirstHalf < firstHalf.length && curSecondHalf < secondHalf.length) {
+            if (firstHalf[curFirstHalf] < secondHalf[curSecondHalf])
+                tempArray[curtempArray++] = firstHalf[curFirstHalf++];
+            else
+                tempArray[curtempArray++] = secondHalf[curSecondHalf++];
+        }
+
+        while (curFirstHalf < firstHalf.length)
+            tempArray[curtempArray++] = firstHalf[curFirstHalf++];
+        while (curSecondHalf < secondHalf.length)
+            tempArray[curtempArray++] = secondHalf[curSecondHalf++];
+    }
+
+    public void anotherSortColors(int[] nums) {
+        int leftPoint = 0;
+        int rightPoint = nums.length - 1;
+        while (leftPoint < rightPoint) {
+            if (nums[leftPoint] == 0) {
+                leftPoint++;
+            }
+            if (nums[rightPoint] == 2) {
+                rightPoint++;
+            }
+            if (nums[leftPoint] == 1 || nums[le])
+        }
+    }
+
+    private void swap(int[] nums, int leftIndex, int rightIndex) {
+        int temp = nums[leftIndex];
+        nums[leftIndex] = nums[rightIndex];
+        nums[rightIndex] = temp;
     }
     
     public static void main(String[] args) {
-        int[] nums = {2, 0, 2, 1, 1, 0};
+        int[] nums = {0, 1, 2, 2, 0, 1};
         sortColors(nums);
+        for (int i : nums) {
+            System.out.print(i + " ");
+        }
     }
 }
