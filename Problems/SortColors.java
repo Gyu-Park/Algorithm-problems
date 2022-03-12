@@ -9,7 +9,27 @@
 package Problems;
 
 public class SortColors {
+    // one pass solution
     public static void sortColors(int[] nums) {
+        int rightPoint = nums.length - 1;
+        int leftPoint = 0;
+        int index = 0;
+        while (index <= rightPoint) {
+            if (nums[index] == 0) {
+                nums[index] = nums[leftPoint];
+                nums[leftPoint++] = 0;
+            }
+            if (nums[index] == 2) {
+                nums[index] = nums[rightPoint];
+                nums[rightPoint--] = 2;
+            }
+            if (nums[index] == 1 || index < leftPoint)
+                index++;
+        }
+    }
+
+    // merge sort solution
+    public static void anotherSortColors(int[] nums) {
         if (nums.length > 1) {
             int halfLen = nums.length / 2;
             int[] firstHalf = new int[halfLen];
@@ -43,28 +63,8 @@ public class SortColors {
             tempArray[curtempArray++] = secondHalf[curSecondHalf++];
     }
 
-    public void anotherSortColors(int[] nums) {
-        int leftPoint = 0;
-        int rightPoint = nums.length - 1;
-        while (leftPoint < rightPoint) {
-            if (nums[leftPoint] == 0) {
-                leftPoint++;
-            }
-            if (nums[rightPoint] == 2) {
-                rightPoint++;
-            }
-            if (nums[leftPoint] == 1 || nums[le])
-        }
-    }
-
-    private void swap(int[] nums, int leftIndex, int rightIndex) {
-        int temp = nums[leftIndex];
-        nums[leftIndex] = nums[rightIndex];
-        nums[rightIndex] = temp;
-    }
-    
     public static void main(String[] args) {
-        int[] nums = {0, 1, 2, 2, 0, 1};
+        int[] nums = { 2, 0, 2, 1, 1, 0 };
         sortColors(nums);
         for (int i : nums) {
             System.out.print(i + " ");
