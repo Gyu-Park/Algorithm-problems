@@ -9,9 +9,43 @@
  */
 package Problems;
 
-public class ValidateBinarySearchTree {
-    public static boolean isValidBST(TreeNode root) {
+import java.util.*;
 
+public class ValidateBinarySearchTree {
+    // interative inorder traversal solution
+    public static boolean isValidBST(TreeNode root) {
+        if (root.left == null && root.right == null)
+            return true;
+
+        long curMaxVal = Long.MIN_VALUE;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            node = stack.pop();
+            if (node.val <= curMaxVal) {
+                return false;
+            }
+            curMaxVal = node.val;
+            node = node.right;
+        }
+        return true;
+    }
+
+    // recursive solution
+    public boolean recursiveIsValidBST(TreeNode root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(TreeNode root, long minVal, long maxVal) {
+        if (root == null)
+            return true;
+        if (root.val >= maxVal || root.val <= minVal)
+            return false;
+        return isValidBST(root.left, minVal, root.val) && isValidBST(root.right, root.val, maxVal);
     }
 
     public static class TreeNode {
@@ -34,11 +68,8 @@ public class ValidateBinarySearchTree {
     }
 
     public static void main(String[] args) {
-        TreeNode q5 = new TreeNode(6);
-        TreeNode q4 = new TreeNode(3);
-        TreeNode q3 = new TreeNode(4, q4, q5);
-        TreeNode q2 = new TreeNode(1);
-        TreeNode root = new TreeNode(5, q2, q3);
+        TreeNode q3 = new TreeNode(Integer.MAX_VALUE);
+        TreeNode root = new TreeNode(Integer.MIN_VALUE, null, q3);
         System.out.println(isValidBST(root));
     }
 }
