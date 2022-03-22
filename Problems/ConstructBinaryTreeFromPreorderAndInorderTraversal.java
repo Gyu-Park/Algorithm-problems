@@ -28,7 +28,7 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
     }
 
     // iterative solution
-    public TreeNode iterativeBuildTree(int[] preorder, int[] inorder) {
+    public static TreeNode iterativeBuildTree(int[] preorder, int[] inorder) {
         if (preorder.length == 0)
             return null;
         Stack<TreeNode> stack = new Stack<>();
@@ -73,6 +73,6 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
     public static void main(String[] args) {
         int[] preorder = { 3, 9, 20, 15, 7 };
         int[] inorder = { 9, 3, 15, 20, 7 };
-        TreeNode root = buildTree(preorder, inorder);
+        TreeNode root = iterativeBuildTree(preorder, inorder);
     }
 }
