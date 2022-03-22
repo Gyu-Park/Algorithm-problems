@@ -57,6 +57,30 @@ public class FlattenBinaryTreeToLinkedList {
         preNode = root;
         return preNode;
     }
+
+    // another solution using a stack
+    public static void stackFlatten(TreeNode root) {
+        if (root == null)
+            return;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+
+            if (node.right != null) {
+                stack.add(node.right);
+            }
+
+            if (node.left != null) {
+                stack.add(node.left);
+            }
+
+            if (!stack.isEmpty())
+                node.right = stack.peek();
+            node.left = null;
+        }
+    }
     
     public static class TreeNode {
         int val;
@@ -84,7 +108,7 @@ public class FlattenBinaryTreeToLinkedList {
         root.left.right = new TreeNode(4);
         root.right = new TreeNode(5);
         root.right.right = new TreeNode(6);
-        anotherFlatten(root);
+        stackFlatten(root);
         while (root != null) {
             System.out.print(root.val + " ");
             root = root.right;
