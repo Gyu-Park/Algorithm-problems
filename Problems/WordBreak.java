@@ -9,28 +9,46 @@ package Problems;
 import java.util.*;
 
 public class WordBreak {
+    // dp solution
     public static boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = new HashSet<>();
-        for (int i = 0; i < wordDict.size(); i++) {
-            set.add(wordDict.get(i));
-        }
+        Set<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
 
-        StringBuilder sb = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            sb.append(c);
-            if (set.contains(sb.toString())) {
-                sb.delete(0, sb.length());
+        for(int i = 1; i <= s.length(); i++){
+            for(int j = 0; j < i; j++){
+                if(dp[j] && set.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
             }
         }
+        
+        return dp[s.length()];
+    }
 
-        return sb.length() == 0;
+    // recursive solution (slow)
+    public static boolean anotherWordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>(wordDict);
+        return recursion(s, set);
+    }
+
+    private static boolean recursion(String s, Set<String> set) {
+        if (s.length() == 0)
+            return true;
+        for (int i = 1; i <= s.length(); i++) {
+            if (set.contains(s.substring(0, i)) && recursion(s.substring(i), set)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public static void main(String[] args) {
         String s = "aaaaaaa";
         List<String> wordDict = new ArrayList<>();
-        wordDict.add("aaaa");
         wordDict.add("aaa");
+        wordDict.add("aaaa");
         System.out.println(wordBreak(s, wordDict));
     }
 }
