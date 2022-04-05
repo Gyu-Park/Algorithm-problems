@@ -7,18 +7,17 @@ import java.util.*;
 
 public class RotateArray {
     public static void rotate(int[] nums, int k) {
-        if (nums.length == 1)
+        if (nums.length <= k)
+            k %= nums.length;
+        if (nums.length == 1 || k == 0)
             return;
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             map.put(i + k, nums[i]);
         }
-        int kMinusuNumLen = 0;
-        if (nums.length < k)
-            kMinusuNumLen = k - nums.length;
         for (int i = 0; i < nums.length; i++) {
             if(i < k) {
-                nums[i] = map.get(nums.length + i + kMinusuNumLen);
+                nums[i] = map.get(nums.length + i);
             } else {
                 nums[i] = map.get(i);
             }
