@@ -17,7 +17,7 @@ public class RotateArray {
             map.put(i + k, nums[i]);
         }
         for (int i = 0; i < nums.length; i++) {
-            if(i < k) {
+            if (i < k) {
                 nums[i] = map.get(nums.length + i);
             } else {
                 nums[i] = map.get(i);
@@ -64,49 +64,10 @@ public class RotateArray {
         }
     }
 
-    // solution using cycle
-    public static void anotherRotate3(int[] nums, int k) {
-        if (nums.length <= k)
-            k %= nums.length;
-        if (nums.length == 1 || k == 0)
-            return;
-        int temp;
-        int index;
-        if ((nums.length % k) / 2 == 0) {
-            for (int i = 0; i < k; i++) {
-                temp = nums[i];
-                index = i + k;
-                while (index < nums.length) {
-                    int temp2 = nums[index];
-                    nums[index] = temp;
-                    temp = temp2;
-                    index += k;
-                    if (index > nums.length - 1) {
-                        nums[i] = temp;
-                    }
-                }
-            }
-        } else {
-            temp = nums[0];
-            index = 0 + k;
-            while (index < nums.length) {
-                int temp2 = nums[index];
-                nums[index] = temp;
-                temp = temp2;
-                if (index == 0)
-                    return;
-                index += k;
-                if (index > nums.length - 1) {
-                    index = index - nums.length;
-                }
-            }
-        }
-    }
-    
     public static void main(String[] args) {
         int[] nums = { -1, -100, 3, 99 };
         int k = 2;
-        anotherRotate3(nums, k);
+        rotate(nums, k);
         for (int i : nums) {
             System.out.print(i + " ");
         }
