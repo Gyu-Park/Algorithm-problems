@@ -9,7 +9,27 @@ package Problems;
 
 public class CanPlaceFlowers {
     public static boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int res = 0;
+        boolean isFlowerbed = false;
+        for (int i = 0; i < flowerbed.length; i++) {
 
+            if (!isFlowerbed && i != flowerbed.length - 1 
+                && flowerbed[i] == 0 && flowerbed[i + 1] == 0) {
+                res++;
+                isFlowerbed = true;
+                continue;
+            } else if (!isFlowerbed && i == flowerbed.length - 1 
+                    && flowerbed[i] == 0) {
+                res++;
+            }
+            
+            if (flowerbed[i] == 0) {
+                isFlowerbed = false;
+            } else {
+                isFlowerbed = true;
+            }
+        }
+        return res >= n ? true : false;
     }
 
     public static void main(String[] args) {
