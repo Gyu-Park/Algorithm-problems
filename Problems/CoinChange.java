@@ -33,7 +33,7 @@ public class CoinChange {
         return count[rem - 1];
     }
 
-    // solution using dp
+    // solution using dp - time complexity O(amount * array length)
     public static int anotherCoinChange(int[] coins, int amount) {
         if (amount < 1)
             return 0;
