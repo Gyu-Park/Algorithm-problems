@@ -12,7 +12,7 @@ public class TopKFrequentElements {
     // a solution using a HashMap and TreeMap O(nlogn)
     public static int[] topKFrequent(int[] nums, int k) {
         if (nums.length == 1)
-            return new int[] {nums[0]};
+            return new int[] { nums[0] };
 
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -34,7 +34,7 @@ public class TopKFrequentElements {
         int[] res = new int[k];
         Iterator<Integer> iter = freqMap.keySet().iterator();
         int index = 0;
-        while(index < res.length) {
+        while (index < res.length) {
             List<Integer> list = freqMap.get(iter.next());
             for (int i : list) {
                 res[index++] = i;
@@ -46,11 +46,11 @@ public class TopKFrequentElements {
         return res;
     }
 
-    // slower solution using two hash sets and one list 
+    // slower solution using two hash sets and one list
     // O(n^m) n = nums.length, m = unique numbers in nums
     private static int[] anotherTopKFrequent(int[] nums, int k) {
         if (nums.length == 1)
-            return new int[] {nums[0]};
+            return new int[] { nums[0] };
         List<Set<Integer>> list = new ArrayList<>();
         list.add(new HashSet<>());
         Set<Integer> isContains = new HashSet<>();
@@ -85,12 +85,17 @@ public class TopKFrequentElements {
         }
         return res;
     }
-    
+
     public static void main(String[] args) {
         int[] nums = { 1, 1, 1, 2, 2, 3, 2, 4, 2, 3, 3 };
         int k = 3;
         int[] res = topKFrequent(nums, k);
         for (int i : res) {
+            System.out.print(i + " ");
+        }
+
+        int[] res2 = anotherTopKFrequent(nums, k);
+        for (int i : res2) {
             System.out.print(i + " ");
         }
     }
