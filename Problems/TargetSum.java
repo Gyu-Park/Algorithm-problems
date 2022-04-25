@@ -34,10 +34,22 @@ public class TargetSum {
     }
 
     // dp solution (optimized solution)
+    /**
+     * 
+     * (Sum 1) - (Sum 2) = target
+     * (Sum 1) - (Total sum - Sum 1) = target
+     * (2Sum 1) - Total sum = target
+     * (Sum 1) = (target - Total sum) / 2
+     * So, all I have to do is to see if how many paths 
+     * there are to make the Sum 1 with the given nums array.
+     * 
+     */
     public static int anotherFindTargetSumWays(int[] nums, int target) {
         int sum = 0;
         for (int n : nums)
             sum += n;
+        if (target < 0)
+            target *= -1;
         if (sum < target || (target + sum) % 2 > 0)
             return 0;
         return subsetSum(nums, (target + sum) / 2);
