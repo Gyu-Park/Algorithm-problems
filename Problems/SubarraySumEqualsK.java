@@ -7,7 +7,7 @@ package Problems;
 import java.util.*;
 
 public class SubarraySumEqualsK {
-    // a soultion using a hashmap
+    // a soultion using a  prefix hashmap
     // time complexity O(n)
     // space complexity O(n)
     public static int subarraySum(int[] nums, int k) {
