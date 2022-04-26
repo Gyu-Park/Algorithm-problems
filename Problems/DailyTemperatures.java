@@ -9,48 +9,10 @@ package Problems;
 import java.util.*;
 
 public class DailyTemperatures {
+    // a solution using a stack
+    // time complexity O(n)
+    // space complexity O(n)
     public static int[] dailyTemperatures(int[] temperatures) {
-        if (temperatures.length == 1)
-            return new int[] {0};
-        
-        List<Integer> list = new ArrayList<>();
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        int[] res = new int[temperatures.length];
-
-        for (int i = 1; i < temperatures.length; i++) {
-            if(temperatures[i] <= temperatures[i - 1]) {
-                list.add(temperatures[i - 1]);
-                if (map.containsKey(temperatures[i - 1])) {
-                    map.get(temperatures[i - 1]).add(i - 1);
-                } else {
-                    List<Integer> storage = new ArrayList<>();
-                    storage.add(i - 1);
-                    map.put(temperatures[i - 1], storage);
-                }
-            }
-            else {
-                res[i - 1] = 1;
-                if (list.size() > 0) {
-                    while (list.size() > 0) {
-                        int num = list.get(list.size() - 1);
-                        if (temperatures[i] > num) {
-                            List<Integer> tempList = map.get(num);
-                            res[tempList.get(tempList.size() - 1)] = i - tempList.get(tempList.size() - 1);
-                            map.get(num).remove(map.get(num).size() - 1);
-                            list.remove(list.size() - 1);
-                        } else {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return res;
-    }
-
-    // another solution using a stack
-    public static int[] anotherDailyTemperatures(int[] temperatures) {
         if (temperatures.length == 1)
             return new int[] {0};
         
@@ -65,6 +27,30 @@ public class DailyTemperatures {
                 res[i - 1] = 1;
             } else {
                 stack.add(i - 1);
+            }
+        }
+        return res;
+    }
+
+    // another solution without using a stack
+    // time complexity O(n)
+    // space complexity O(2n)
+    public static int[] anotherDailyTemperatures(int[] temperatures) {
+        if (temperatures.length == 1)
+            return new int[] {0};
+        
+        int[] storage = new int[temperatures.length];
+        int[] res = new int[temperatures.length];
+        int endOfStorage = -1;
+        for (int i = 1; i < temperatures.length; i++) {
+            while (endOfStorage >= 0 && temperatures[storage[endOfStorage]] < temperatures[i]) {
+                int index = storage[endOfStorage--];
+                res[index] = i - index;
+            }
+            if (temperatures[i] > temperatures[i - 1]) {
+                res[i - 1] = 1;
+            } else {
+                storage[++endOfStorage] = i - 1;
             }
         }
         return res;
