@@ -9,6 +9,7 @@
 package Problems;
 
 public class ThreeSumClosest {
+    // two points
     public static int threeSumClosest(int[] nums, int target) {
         
     }
