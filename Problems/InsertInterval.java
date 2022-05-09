@@ -13,7 +13,10 @@ package Problems;
 import java.util.*;
 
 public class InsertInterval {
+    // time complexity O(n) where n is intervals.length.
+    // space complexity O(k) where k is result array's length.
     public static int[][] insert(int[][] intervals, int[] newInterval) {
+        // corner cases
         if (intervals.length == 0)
             return new int[][] { { newInterval[0], newInterval[1] } };
         if (newInterval[0] > intervals[intervals.length - 1][1]) {
@@ -23,6 +26,7 @@ public class InsertInterval {
             intervals[intervals.length - 1][1] = newInterval[1];
             return intervals;
         }
+
         Queue<Integer> queue1 = new LinkedList<>();
         Queue<Integer> queue2 = new LinkedList<>();
         int i;
@@ -63,6 +67,38 @@ public class InsertInterval {
             res[k][1] = queue2.poll();
         }
         return res;
+    }
+
+    // more readable and concise solution with while loops
+    // time complexity O(n)
+    // spcae complexity O(n)
+    public int[][] anotherInsert(int[][] intervals, int[] newInterval) {
+        List<int[]> result = new LinkedList<>();
+        int i = 0;
+
+        // add all the intervals ending before newInterval starts
+        while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        // merge all overlapping intervals to one considering newInterval
+        while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+
+        // add the union of intervals we got
+        result.add(newInterval);
+
+        // add all the rest
+        while (i < intervals.length) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        return result.toArray(new int[result.size()][]);
     }
 
     public static void main(String[] args) {
