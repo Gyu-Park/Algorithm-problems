@@ -8,7 +8,28 @@ import java.util.*;
 
 public class UniqueBinarySearchTreesII {
     public static List<TreeNode> generateTrees(int n) {
+        List<TreeNode> res = new ArrayList<>();
+        if (n == 1) {
+            res.add(new TreeNode(1));
+            return res;
+        }
 
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++)
+            list.add(i);
+        
+        for (int i = 0; i < list.size(); i++) {
+            TreeNode node = new TreeNode(list.get(i));
+            list.remove(list.get(i));
+            res = helper(res, list, node);
+            list.add(i + 1);
+        }
+
+        return res;
+    }
+
+    private static List<TreeNode> helper(List<TreeNode> res, List<Integer> list, TreeNode node) {
+        
     }
 
     public static class TreeNode {
