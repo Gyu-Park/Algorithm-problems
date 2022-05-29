@@ -14,22 +14,20 @@ public class UniqueBinarySearchTreesII {
             return res;
         }
 
-        List<Integer> list = new ArrayList<>();
-        for (int i = 1; i <= n; i++)
-            list.add(i);
-        
-        for (int i = 0; i < list.size(); i++) {
-            TreeNode node = new TreeNode(list.get(i));
-            list.remove(list.get(i));
-            res = helper(res, list, node);
-            list.add(i + 1);
+        int[] array = new int[n + 1];
+        for (int i = 1; i < array.length; i++)
+            array[i] = i;
+
+        for (int i = 1; i < array.length; i++) {
+            TreeNode node = new TreeNode(array[i]);
+            res = helper(res, array, node);
         }
 
         return res;
     }
 
-    private static List<TreeNode> helper(List<TreeNode> res, List<Integer> list, TreeNode node) {
-        
+    private static List<TreeNode> helper(List<TreeNode> res, int[] array, TreeNode node) {
+
     }
 
     public static class TreeNode {
