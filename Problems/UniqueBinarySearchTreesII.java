@@ -7,27 +7,34 @@ package Problems;
 import java.util.*;
 
 public class UniqueBinarySearchTreesII {
+    // recursive solution
+    // time complexity O((2n)! / (n+1)!n!)
+    // this can be written O(Cn), which is Catalan number
+    // space complexity O(n * Cn)
     public static List<TreeNode> generateTrees(int n) {
+        if (n == 0)
+            return new ArrayList<>();
+        return helper(1, n);
+    }
+
+    private static List<TreeNode> helper(int left, int right) {
         List<TreeNode> res = new ArrayList<>();
-        if (n == 1) {
-            res.add(new TreeNode(1));
+        if (left > right) {
+            res.add(null);
             return res;
         }
 
-        int[] array = new int[n + 1];
-        for (int i = 1; i < array.length; i++)
-            array[i] = i;
-
-        for (int i = 1; i < array.length; i++) {
-            TreeNode node = new TreeNode(array[i]);
-            res = helper(res, array, node);
+        for (int i = left; i <= right; i++) {
+            List<TreeNode> leftNode = helper(left, i - 1);
+            List<TreeNode> rightNode = helper(i + 1, right);
+            for (TreeNode l : leftNode) {
+                for (TreeNode r : rightNode) {
+                    res.add(new TreeNode(i, l, r));
+                }
+            }
         }
 
         return res;
-    }
-
-    private static List<TreeNode> helper(List<TreeNode> res, int[] array, TreeNode node) {
-
     }
 
     public static class TreeNode {
@@ -52,5 +59,6 @@ public class UniqueBinarySearchTreesII {
     public static void main(String[] args) {
         int n = 3;
         List<TreeNode> res = generateTrees(n);
+        System.out.println(res.size());
     }
 }
