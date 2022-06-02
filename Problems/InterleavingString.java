@@ -53,14 +53,14 @@ public class InterleavingString {
     }
 
     // dfs with memorization
-    public boolean isInterleave2(String s1, String s2, String s3) {
+    public static boolean isInterleave2(String s1, String s2, String s3) {
         if (s1.length() + s2.length() != s3.length())
             return false;
         HashSet<Integer> cache = new HashSet<Integer>();
         return helper(s1, s2, s3, 0, 0, cache);
     }
 
-    private boolean helper(String s1, String s2, String s3, int p1, int p2, HashSet<Integer> cache) {
+    private static boolean helper(String s1, String s2, String s3, int p1, int p2, HashSet<Integer> cache) {
         if (p1 + p2 == s3.length())
             return true;
         if (cache.contains(p1 * s3.length() + p2))
@@ -86,6 +86,6 @@ public class InterleavingString {
         String s1 = "aabcc";
         String s2 = "dbbca";
         String s3 = "aadbbbcacc";
-        System.out.println(isInterleave(s1, s2, s3));
+        System.out.println(isInterleave2(s1, s2, s3));
     }
 }
