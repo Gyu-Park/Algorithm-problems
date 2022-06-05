@@ -7,7 +7,7 @@ package Problems;
 
 public class RecoverBinarySearchTree {
     public static void recoverTree(TreeNode root) {
-        
+
     }
 
     public static class TreeNode {
@@ -28,13 +28,12 @@ public class RecoverBinarySearchTree {
             this.right = right;
         }
     }
-    
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(3);
         root.left = new TreeNode(1);
         root.right = new TreeNode(4);
         root.right.left = new TreeNode(2);
         recoverTree(root);
-        
     }
 }
