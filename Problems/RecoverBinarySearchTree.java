@@ -13,6 +13,7 @@ public class RecoverBinarySearchTree {
 
     public static void recoverTree(TreeNode root) {
         helper(root);
+        
         int temp = firstEl.val;
         firstEl.val = secondEl.val;
         secondEl.val = temp;
