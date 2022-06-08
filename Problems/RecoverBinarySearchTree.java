@@ -6,36 +6,47 @@
 package Problems;
 
 public class RecoverBinarySearchTree {
-
-    static TreeNode firstEl = null;
-    static TreeNode secondEl = null;
-    static TreeNode preEl = new TreeNode(Integer.MIN_VALUE);
-
     public static void recoverTree(TreeNode root) {
-        helper(root);
-        
-        int temp = firstEl.val;
-        firstEl.val = secondEl.val;
-        secondEl.val = temp;
-    }
-
-    private static void helper(TreeNode root) {
-        if (root == null)
-            return;
-        
-        helper(root.left);
-
-        // Start of "do some business", 
-        // If first element has not been found, assign it to prevElement (refer to 6 in the example above)
-        if (firstEl == null && preEl.val >= root.val)
-            firstEl = preEl;
-    
-        // If first element is found, assign the second element to the root (refer to 2 in the example above)
-        if (firstEl != null && preEl.val >= root.val)
-            secondEl = root;
-        preEl = root;
-
-        helper(root.right);
+        TreeNode pre = null;
+        TreeNode first = null, second = null;
+        // Morris Traversal
+        TreeNode temp = null;
+		while(root!=null){
+			if(root.left!=null){
+				// connect threading for root
+				temp = root.left;
+				while(temp.right!=null && temp.right != root)
+					temp = temp.right;
+				// the threading already exists
+				if(temp.right!=null){
+				    if(pre!=null && pre.val > root.val){
+				        if(first==null){first = pre;second = root;}
+				        else{second = root;}
+				    }
+				    pre = root;
+				    
+					temp.right = null;
+					root = root.right;
+				}else{
+					// construct the threading
+					temp.right = root;
+					root = root.left;
+				}
+			}else{
+				if(pre!=null && pre.val > root.val){
+				    if(first==null){first = pre;second = root;}
+				    else{second = root;}
+				}
+				pre = root;
+				root = root.right;
+			}
+		}
+		// swap two node values;
+		if(first!= null && second != null){
+		    int t = first.val;
+		    first.val = second.val;
+		    second.val = t;
+		}
     }
 
     public static class TreeNode {
