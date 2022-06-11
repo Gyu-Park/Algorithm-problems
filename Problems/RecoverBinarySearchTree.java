@@ -63,11 +63,11 @@ public class RecoverBinarySearchTree {
     // recursive solution using in-order traversal
     // time complexity O(n)
     // space complexity O(n)
-    TreeNode prev = null;
-    TreeNode first = null;
-    TreeNode second = null;
+    static TreeNode prev = null;
+    static TreeNode first = null;
+    static TreeNode second = null;
 
-    public void anotherRecoverTree(TreeNode root) {
+    public static void anotherRecoverTree(TreeNode root) {
         // use inorder traversal to detect incorrect node
 
         inOrder(root);
@@ -77,7 +77,7 @@ public class RecoverBinarySearchTree {
         second.val = temp;
     }
 
-    public void inOrder(TreeNode root) {
+    public static void inOrder(TreeNode root) {
         if (root == null)
             return;
         // search left tree
@@ -124,7 +124,7 @@ public class RecoverBinarySearchTree {
         root.left = new TreeNode(1);
         root.right = new TreeNode(4);
         root.right.left = new TreeNode(2);
-        recoverTree(root);
+        anotherRecoverTree(root);
 
     }
 }
