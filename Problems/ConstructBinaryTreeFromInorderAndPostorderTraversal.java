@@ -34,6 +34,41 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
         return root;
     }
 
+    // iterative solution
+    // time complexity O(n)
+    // space complexity O(n)
+    public static TreeNode anotherBuildTree(int[] inorder, int[] postorder) {
+        if (inorder.length == 0 || postorder.length == 0) 
+            return null;
+        int ip = inorder.length - 1;
+        int pp = postorder.length - 1;
+        
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode prev = null;
+        TreeNode root = new TreeNode(postorder[pp]);
+        stack.push(root);
+        pp--;
+        
+        while (pp >= 0) {
+            while (!stack.isEmpty() && stack.peek().val == inorder[ip]) {
+                prev = stack.pop();
+                ip--;
+            }
+            TreeNode newNode = new TreeNode(postorder[pp]);
+            if (prev != null) {
+                prev.left = newNode;
+            } else if (!stack.isEmpty()) {
+                TreeNode currTop = stack.peek();
+                currTop.right = newNode;
+            }
+            stack.push(newNode);
+            prev = null;
+            pp--;
+        }
+        
+        return root;
+    }
+
     public static class TreeNode {
         int val;
         TreeNode left;
@@ -57,7 +92,7 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
         int[] inorder = {9, 3, 15, 20, 7};
         int[] postorder = {9, 15, 7, 20, 3};
 
-        TreeNode node = buildTree(inorder, postorder);
+        TreeNode node = anotherBuildTree(inorder, postorder);
         Stack<TreeNode> stack = new Stack<>();
 
         while (node != null || !stack.isEmpty()) {
