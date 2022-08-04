@@ -20,7 +20,6 @@ public class RobotBoundedInCircle {
     public static boolean isRobotBounded(String instructions) {
         int[] location = {0, 0};
         char direction = 'n';
-        int count = 0;
         for (int i = 0; i < instructions.length(); i++) {
             if (instructions.charAt(i) == 'G') {
                 location = goOneUnit(direction, location);
