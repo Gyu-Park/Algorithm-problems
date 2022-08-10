@@ -84,17 +84,22 @@ public class LeastNumberOfUniqueIntegersAfterKRemovals {
             count++;
         }
 
-        for (int i = 0; i < array.length; i ++) {
+        int occurrence = 0;
+        int i = 0;
+        for (i = 0; i < array.length; i ++) {
+            occurrence = array[i];
+            k -= occurrence * i;
+            count -= array[i];
             if (k <= 0)
                 break;
-            while (array[i] > 0 && k > 0) {
-                k -= i;
-                array[i]--;
-                count--;
-            }
         }
 
-        return k < 0 ? count + 1 : count;
+        while (k < 0) {
+            k += i;
+            count++;
+        }
+
+        return count;
     }
 
 
