@@ -40,28 +40,28 @@ public class LFUCache {
     }
     
     public int get(int key) {
-        if(!keyValMap.containsKey(key))
+        if (!keyValMap.containsKey(key))
             return -1;
         int count = keyCountMap.get(key);
         keyCountMap.put(key, count + 1);
         countKeyMap.get(count).remove(key);
-        if(count == leastUsedNum && countKeyMap.get(count).size() == 0)
+        if (count == leastUsedNum && countKeyMap.get(count).size() == 0)
             leastUsedNum++;
-        if(!countKeyMap.containsKey(count + 1))
+        if (!countKeyMap.containsKey(count + 1))
             countKeyMap.put(count + 1, new LinkedHashSet<>());
         countKeyMap.get(count + 1).add(key);
         return keyValMap.get(key);
     }
     
     public void put(int key, int value) {
-        if(MAXSIZE <= 0)
+        if (MAXSIZE <= 0)
             return;
-        if(keyValMap.containsKey(key)) {
+        if (keyValMap.containsKey(key)) {
             keyValMap.put(key, value);
             get(key);
             return;
         } 
-        if(keyValMap.size() >= MAXSIZE) {
+        if (keyValMap.size() >= MAXSIZE) {
             int evit = countKeyMap.get(leastUsedNum).iterator().next();
             countKeyMap.get(leastUsedNum).remove(evit);
             keyValMap.remove(evit);
