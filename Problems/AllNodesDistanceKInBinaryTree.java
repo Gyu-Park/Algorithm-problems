@@ -9,6 +9,7 @@ package Problems;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,6 +63,48 @@ public class AllNodesDistanceKInBinaryTree {
             buildMap(node.right, node, map);
         }
     }
+
+    // another solution with HashMap
+    // key = node, val = distance from a target
+    static Map<TreeNode, Integer> map = new HashMap<>();
+    public static List<Integer> anotherDistanceK(TreeNode root, TreeNode target, int K) {
+        List<Integer> res = new LinkedList<>();
+        find(root, target);
+        dfs(root, K, map.get(root), res);
+        return res;
+    }
+    
+    // find target node first and store the distance in that path that we could use it later directly
+    private static int find(TreeNode root, TreeNode target) {
+        if (root == null) 
+            return -1;
+        if (root == target) {
+            map.put(root, 0);
+            return 0;
+        }
+        int left = find(root.left, target);
+        if (left >= 0) {
+            map.put(root, left + 1);
+            return left + 1;
+        }
+		int right = find(root.right, target);
+		if (right >= 0) {
+            map.put(root, right + 1);
+            return right + 1;
+        }
+        return -1;
+    }
+    
+    private static void dfs(TreeNode root, int K, int length, List<Integer> res) {
+        if (root == null) 
+            return;
+        if (map.containsKey(root)) 
+            length = map.get(root);
+        if (length == K) 
+            res.add(root.val);
+        dfs(root.left, K, length + 1, res);
+        dfs(root.right, K, length + 1, res);
+    }
     
     public static class TreeNode {
         int val;
@@ -84,6 +127,6 @@ public class AllNodesDistanceKInBinaryTree {
         TreeNode root = new TreeNode(0);
         root.left = l1;
         root.right = l2;
-        System.out.println(distanceK(root, l3, 3));
+        System.out.println(anotherDistanceK(root, l3, 3));
     }
 }
