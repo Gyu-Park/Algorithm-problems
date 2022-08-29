@@ -11,6 +11,7 @@
 package Problems;
 
 public class JumpGameII {
+    // O(n^2) in the worst case
     public static int jump(int[] nums) {
         if (nums[0] == 0) {
             return 0;
@@ -33,9 +34,24 @@ public class JumpGameII {
         }
         return -1;
     }
+
+    // O(n) solution
+    public static int anotherJump(int[] nums) {
+        int jump = 0;
+        int lastJump = 0;
+        int currentJumpMax = 0;
+        for(int i = 0; i < nums.length - 1; i++) {
+            currentJumpMax = Math.max(currentJumpMax, i + nums[i]);
+            if (i == lastJump) {
+                jump++;
+                lastJump = currentJumpMax;
+            } 
+        }
+        return jump;
+    }
     
     public static void main(String[] args) {
         int[] nums = {2,3,1,1,4};
-        System.out.println(jump(nums));
+        System.out.println(anotherJump(nums));
     }
 }
