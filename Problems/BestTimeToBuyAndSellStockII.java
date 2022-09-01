@@ -40,50 +40,25 @@
 package Problems;
 
 public class BestTimeToBuyAndSellStockII {
-    // dp solution
-    // time complexity: O(n)
-    // space complexity: O(n)
-    public static int maxProfit(int[] prices) {
-        int[] dp = new int[prices.length];
-        int hold = prices[0];
-        int buy = prices[0];
-        dp[0] = 0;
-        for (int i = 1; i < prices.length; i++) {
-            if (buy == Integer.MAX_VALUE) {
-                dp[i] = Math.max(dp[i - 1], prices[i] - hold);
-                hold = Math.min(hold, prices[i]);
-                buy = prices[i];
-            } else if (buy > prices[i]) {
-                buy = prices[i];
-                hold = prices[i];
-                dp[i] = dp[i - 1];
-            } else if (buy < prices[i]) {
-                dp[i] = Math.max(dp[i - 1] + (prices[i] - buy), prices[i] - hold);
-                buy = Integer.MAX_VALUE;
-            }
-        }
-        return dp[dp.length - 1];
-    }
-
     // dp solution with only 4 variables (without an array)
     // time complexity: O(n)
     // space complexity: O(1)
-    public static int anotherMaxProfit(int[] prices) {
-        int lastBuy = -prices[0];
-        int lastSold = 0;
+    public static int maxProfit(int[] prices) {
+        int sold = 0;
+        int buy = -prices[0];
         for (int i = 1; i < prices.length; i++) {
-            int currBuy = Math.max(lastBuy, lastSold - prices[i]);
-            int currSold = Math.max(lastSold, lastBuy + prices[i]);
-            lastBuy = currBuy;
-            lastSold = currSold;
+            int curSold = Math.max(sold, buy + prices[i]);
+            int curBuy = Math.max(buy, sold - prices[i]);
+            sold = curSold;
+            buy = curBuy;
         }
-        return lastSold;
+        return sold;
     }
 
     // another solution with while loops
     // time complexity: O(n)
     // space complexity: O(1)
-    public static int anotherMaxProfit2(int[] prices) {
+    public static int anotherMaxProfit1(int[] prices) {
         int i = 0;
         int buy, sell, profit = 0;
         while (i < prices.length - 1) {
@@ -100,9 +75,8 @@ public class BestTimeToBuyAndSellStockII {
     }
     
     public static void main(String[] args) {
-        int[] prices = {7, 1, 5, 3, 6, 4};
+        int[] prices = {6, 1, 3, 2, 4, 7};
         System.out.println(maxProfit(prices));
-        System.out.println(anotherMaxProfit(prices));
-        System.out.println(anotherMaxProfit2(prices));
+        System.out.println(anotherMaxProfit1(prices));
     }
 }
