@@ -1,3 +1,6 @@
+import heapq
+
+
 def kClosest(points, k):
     """
     :type points: List[List[int]]
@@ -13,6 +16,22 @@ def kClosest(points, k):
         point.pop()
 
     return points[0:k][0:1]
+
+
+def kClosest2(points, k):
+    """
+    :type points: List[List[int]]
+    :type k: int
+    :rtype: List[List[int]]
+    """
+    heap = []
+    for point in points:
+        dist = point[0] * point[0] + point[1] * point[1]
+        heapq.heappush(heap, (-dist, point))
+        if len(heap) > k:
+            heapq.heappop(heap)
+
+    return [tuple[1] for tuple in heap]
 
 
 points = [[1, 3], [-2, 2]]
