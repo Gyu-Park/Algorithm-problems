@@ -11,6 +11,7 @@ package Problems;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class CriticalConnectionsInaNetwork {
 
     // tarjan algorithm
@@ -50,15 +51,17 @@ public class CriticalConnectionsInaNetwork {
                 dfs(v, low, disc, graph, res, u);
                 low[u] = Math.min(low[u], low[v]);
                 if (low[v] > disc[u]) {
-                    // u - v is critical, there is no path for v to reach back to u or previous vertices of u
+                    // u - v is critical, there is no path for v to reach back to u or previous
+                    // vertices of u
                     res.add(Arrays.asList(u, v));
                 }
-            } else { // if v discovered and is not parent of u, update low[u], cannot use low[v] because u is not subtree of v
+            } else { // if v discovered and is not parent of u, update low[u], cannot use low[v]
+                     // because u is not subtree of v
                 low[u] = Math.min(low[u], disc[v]);
             }
         }
     }
-    
+
     public static void main(String[] args) {
         List<List<Integer>> connections = new ArrayList<>();
         List<Integer> connection1 = new ArrayList<>();
