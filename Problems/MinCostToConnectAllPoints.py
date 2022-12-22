@@ -32,6 +32,7 @@ class UnionFind:
 
 
 class Solution:
+    # Kruskal's algorithm
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
         # 1. sort distances between vertices in ascending order.
         # 2. check if a edge makes a cycle; if it's not, choose it.
@@ -64,7 +65,46 @@ class Solution:
 
         return res
 
+    # Prim's algorithm
+    def minCostConnectPoints2(self, points: List[List[int]]) -> int:
+        # Input: points = [[3,12],[-2,5],[-4,1]]
+        # Return the minimum cost to make all points connected.
+        firstP = points[0]
+        minheap = []
+        i = 1
+        for i, point in enumerate(points[1:], 1):
+            dist = abs(firstP[0] - point[0]) + abs(firstP[1] - point[1])
+            edge = "0," + str(i)
+            heapq.heappush(minheap, (dist, edge))
 
-points = [[5, -17], [-3, -14], [-2, 18], [-14, 15], [-9, -17],
-          [9, -16], [8, -3], [-15, 11], [-12, 17], [6, 6], [4, 3]]
-print(Solution.minCostConnectPoints(Solution, points))
+        visited = set()
+        visited.add(0)
+        res = 0
+        connected = 0
+        uf = UnionFind(len(points))
+        while connected < len(points) - 1:
+            edgeTup = heapq.heappop(minheap)
+            dist = edgeTup[0]
+            vertices = edgeTup[1].split(",")
+            vertex1 = int(vertices[0])
+            vertex2 = int(vertices[1])
+            if uf.isConnected(vertex1, vertex2):
+                continue
+            res += dist
+            uf.union(vertex1, vertex2)
+            visited.add(vertex2)
+            for i, point in enumerate(points):
+                if i in visited:
+                    continue
+                dist = abs(points[vertex2][0] - point[0]) + \
+                    abs(points[vertex2][1] - point[1])
+                edge = str(vertex2) + "," + str(i)
+                heapq.heappush(minheap, (dist, edge))
+            connected += 1
+        return res
+
+
+# points = [[5, -17], [-3, -14], [-2, 18], [-14, 15], [-9, -17],
+#           [9, -16], [8, -3], [-15, 11], [-12, 17], [6, 6], [4, 3]]
+points = [[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]
+print(Solution.minCostConnectPoints2(Solution, points))
