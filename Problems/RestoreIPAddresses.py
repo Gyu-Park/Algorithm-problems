@@ -27,5 +27,5 @@ class Solution:
                 break
             st += c
             st += "."
-            Solution.helper(self, s, st, index + i + 1, count + 1, res)
+            Solution.helper(s, st, index + i + 1, count + 1, res)
             st = st[:-1]
