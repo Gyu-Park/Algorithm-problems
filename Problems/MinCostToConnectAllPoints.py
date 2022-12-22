@@ -103,8 +103,36 @@ class Solution:
             connected += 1
         return res
 
+    # Prim's algorithm
+    def minCostConnectPoints3(self, points: List[List[int]]) -> int:
+        n = len(points)
+        all_edges = []
+
+        # Storing all edges of our complete graph.
+        for curr_node in range(n):
+            for next_node in range(curr_node + 1, n):
+                weight = abs(points[curr_node][0] - points[next_node][0]) +\
+                    abs(points[curr_node][1] - points[next_node][1])
+                all_edges.append((weight, curr_node, next_node))
+
+        # Sort all edges in increasing order.
+        all_edges.sort()
+
+        uf = UnionFind(n)
+        res = 0
+        edges_used = 0
+
+        for weight, node1, node2 in all_edges:
+            if uf.isConnected(node1, node2) is False:
+                uf.union(node1, node2)
+                res += weight
+                edges_used += 1
+                if edges_used == n - 1:
+                    break
+        return res
+
 
 # points = [[5, -17], [-3, -14], [-2, 18], [-14, 15], [-9, -17],
 #           [9, -16], [8, -3], [-15, 11], [-12, 17], [6, 6], [4, 3]]
 points = [[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]
-print(Solution.minCostConnectPoints2(Solution, points))
+print(Solution.minCostConnectPoints3(Solution, points))
