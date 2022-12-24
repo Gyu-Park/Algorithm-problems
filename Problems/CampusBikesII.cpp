@@ -43,3 +43,13 @@ public:
         }
     }
 };
+
+int main(void)
+{
+    Solution s;
+    vector<vector<int>> workers = {{0, 0}, {1, 1}, {2, 0}};
+    vector<vector<int>> bikes = {{1, 0}, {2, 2}, {2, 1}};
+    int res = s.assignBikes(workers, bikes);
+    cout << res << endl;
+    return 0;
+}
