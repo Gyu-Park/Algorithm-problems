@@ -26,6 +26,7 @@ public:
             int mask = p.second.second;
             if (set.find(p.second) != set.end())
                 continue;
+            set.insert(p.second);
             if (index == workers.size())
                 return minCost;
             for (int i = 0; i < bikes.size(); i++)
