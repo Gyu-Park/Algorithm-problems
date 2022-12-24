@@ -5,7 +5,6 @@ using namespace std;
 class HitCounter
 {
 public:
-    queue<int> hits;
     HitCounter()
     {
     }
@@ -23,4 +22,7 @@ public:
         }
         return this->hits.size();
     }
+
+private:
+    queue<int> hits;
 };
