@@ -69,4 +69,45 @@ public:
         }
         return res == INT_MAX ? -1 : res;
     }
+
+    // another solution using bfs
+    int networkDelayTime2(vector<vector<int>> &times, int n, int k)
+    {
+        for (vector<int> time : times)
+        {
+            int source = time[0];
+            int dest = time[1];
+            int t = time[2];
+            adj[source].push_back({t, dest});
+        }
+
+        queue<int> q;
+        q.push(k);
+
+        vector<int> table(n + 1, INT_MAX);
+        table[k] = 0;
+
+        while (!q.empty())
+        {
+            int curNode = q.front();
+            q.pop();
+            for (pair<int, int> p : adj[curNode])
+            {
+                int time = p.first;
+                int dest = p.second;
+                if (table[dest] > table[curNode] + time)
+                {
+                    table[dest] = table[curNode] + time;
+                    q.push(dest);
+                }
+            }
+        }
+
+        int res = INT_MIN;
+        for (int i = 1; i <= n; i++)
+        {
+            res = max(res, table[i]);
+        }
+        return res == INT_MAX ? -1 : res;
+    }
 };
