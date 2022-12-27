@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 // solution using Dijkstra's Algorithm
@@ -155,4 +156,110 @@ public:
             this->y = y;
         }
     };
+};
+
+// union find solution
+class Solution
+{
+public:
+    class Edge
+    {
+    public:
+        int x, y;
+        int diff;
+        Edge(int x, int y, int diff)
+        {
+            this->x = x;
+            this->y = y;
+            this->diff = diff;
+        }
+    };
+
+    static bool compareInterval(const Edge &e1, const Edge &e2)
+    {
+        return (e1.diff < e2.diff);
+    }
+
+    class UnionFind
+    {
+    public:
+        vector<int> root;
+        vector<int> rank;
+        vector<Edge> edgeList;
+        UnionFind(vector<vector<int>> &heights)
+        {
+            int row = heights.size();
+            int col = heights[0].size();
+            rank.assign(row * col, 1);
+            for (int curRow = 0; curRow < row; curRow++)
+            {
+                for (int curCol = 0; curCol < col; curCol++)
+                {
+                    int index = curRow * col + curCol;
+                    root.push_back(index);
+                    if (curRow > 0)
+                    {
+                        Edge e1(index, index - col, abs(heights[curRow][curCol] - heights[curRow - 1][curCol]));
+                        edgeList.push_back(e1);
+                    }
+                    if (curCol > 0)
+                    {
+                        Edge e2(index, index - 1, abs(heights[curRow][curCol] - heights[curRow][curCol - 1]));
+                        edgeList.push_back(e2);
+                    }
+                }
+            }
+            sort(edgeList.begin(), edgeList.end(), compareInterval);
+        }
+
+        int find(int x)
+        {
+            if (x != root[x])
+                return root[x] = find(root[x]);
+            return root[x];
+        }
+
+        void makeUnion(int x, int y)
+        {
+            int xRoot = find(x);
+            int yRoot = find(y);
+            if (xRoot == yRoot)
+                return;
+            if (rank[xRoot] > rank[yRoot])
+            {
+                root[yRoot] = xRoot;
+            }
+            else if (rank[xRoot] < rank[yRoot])
+            {
+                root[xRoot] = yRoot;
+            }
+            else
+            {
+                root[yRoot] = xRoot;
+                rank[xRoot] += 1;
+            }
+        }
+    };
+
+    int minimumEffortPath(vector<vector<int>> &heights)
+    {
+        if (heights.size() == 1 && heights[0].size() == 1)
+            return 0;
+        UnionFind uf(heights);
+        int src = 0;
+        int dest = heights.size() * heights[0].size() - 1;
+        vector<Edge> eList = uf.edgeList;
+        for (int i = 0; i < eList.size(); i++)
+        {
+            int x = eList[i].x;
+            int y = eList[i].y;
+            int diff = eList[i].diff;
+            uf.makeUnion(x, y);
+            if (uf.find(src) == uf.find(dest))
+            {
+                return diff;
+            }
+        }
+        return -1;
+    }
 };
