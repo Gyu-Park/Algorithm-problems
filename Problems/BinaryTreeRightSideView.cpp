@@ -14,6 +14,7 @@ struct TreeNode {
 
 class Solution {
    public:
+    // bfs solution using a queue
     vector<int> rightSideView(TreeNode *root) {
         // using bfs and label height in each nodes and keep updating the res vector
         vector<int> res;
@@ -36,6 +37,20 @@ class Solution {
             if (node->right != nullptr)
                 q.push(pair<int, TreeNode *>(h + 1, node->right));
         }
+        return res;
+    }
+
+    // recursive solution usign preorder traversal
+    void recursion(TreeNode *root, int level, vector<int> &res) {
+        if (root == NULL) return;
+        if (res.size() < level) res.push_back(root->val);
+        recursion(root->right, level + 1, res);
+        recursion(root->left, level + 1, res);
+    }
+
+    vector<int> rightSideView2(TreeNode *root) {
+        vector<int> res;
+        recursion(root, 1, res);
         return res;
     }
 };
