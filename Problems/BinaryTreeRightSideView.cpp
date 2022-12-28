@@ -40,7 +40,7 @@ class Solution {
         return res;
     }
 
-    // recursive solution usign preorder traversal
+    // recursive solution using modified preorder traversal (root right left) instead of (root left right)
     void recursion(TreeNode *root, int level, vector<int> &res) {
         if (root == NULL) return;
         if (res.size() < level) res.push_back(root->val);
