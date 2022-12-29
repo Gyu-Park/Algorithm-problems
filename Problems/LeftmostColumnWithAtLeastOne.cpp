@@ -39,7 +39,7 @@ class Solution {
         return colStart < dim[1] && binaryMatrix.get(row, colStart) == 1 ? colStart : -1;
     }
 
-    // fastest solution
+    // fastest solution; Start at Top Right, Move Only Left and Down
     int leftMostColumnWithOne2(BinaryMatrix &binaryMatrix) {
         vector<int> dim = binaryMatrix.dimensions();
         int cols = dim[1];
