@@ -28,6 +28,8 @@ class Solution {
         priority_queue<int, vector<int>, greater<int>> minHeap;
         minHeap.push(intervals[0][1]);
         for (int i = 1; i < intervals.size(); i++) {
+            // this "if" allows to update end time, meaning that we don't need an extra room
+            // if start time is before the end time in minheap, just push its end time, meaning that we need an extra room
             if (intervals[i][0] >= minHeap.top())
                 minHeap.pop();
             minHeap.push(intervals[i][1]);
