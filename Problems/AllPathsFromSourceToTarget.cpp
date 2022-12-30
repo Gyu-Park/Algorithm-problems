@@ -31,7 +31,8 @@ class Solution {
         int target = int(graph.size()) - 1;
         map<int, vector<vector<int>>> memo;
         function<vector<vector<int>>(int)> allPathsToTarget = [&](int currNode) {
-            if (memo.count(currNode)) return memo[currNode];
+            if (memo.count(currNode))
+                return memo[currNode];
             vector<vector<int>> results;
             if (currNode == target) {
                 results.push_back(vector<int>{target});
