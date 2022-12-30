@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 #include <vector>
 using namespace std;
 
@@ -57,4 +58,41 @@ class Solution {
             }
         }
     };
+
+    // another solution using bfs
+    bool bfs(int src, vector<vector<int>>& adj, vector<int>& color) {
+        queue<int> q;
+        q.push(src);
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+            int nColor = color[node];
+            for (int i = 0; i < adj[node].size(); i++) {
+                if (color[adj[node][i]] == nColor)
+                    return false;
+                if (color[adj[node][i]] == -1) {
+                    color[adj[node][i]] = 1 - nColor;
+                    q.push(adj[node][i]);
+                }
+            }
+        }
+        return true;
+    }
+
+    bool possibleBipartition2(int n, vector<vector<int>>& dislikes) {
+        vector<vector<int>> adj(n + 1);
+        for (int i = 0; i < dislikes.size(); i++) {
+            adj[dislikes[i][0]].push_back(dislikes[i][1]);
+            adj[dislikes[i][1]].push_back(dislikes[i][0]);
+        }
+        vector<int> color(n + 1, -1);
+        for (int i = 1; i < n + 1; i++) {
+            if (color[i] == -1) {
+                color[i] = 0;
+                if (!bfs(i, adj, color))
+                    return false;
+            }
+        }
+        return true;
+    }
 };
