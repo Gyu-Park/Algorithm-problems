@@ -6,7 +6,7 @@
 using namespace std;
 
 class Solution {
-   public:
+   public:  // solution using disjoint set (Union Find)
     string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
         // loop through string s and put each char into minheap with its corresponding index
         // loop through pairs and group overlapping indices using Union Find
@@ -33,6 +33,44 @@ class Solution {
                 }
             }
         }
+        return res;
+    }
+
+    // optimized solution
+    string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
+        sort(pairs.begin(), pairs.end());
+        UnionFind uf(s.size());
+        for (auto& a : pairs) {
+            uf.group(a[0], a[1]);
+        }
+
+        unordered_map<int, vector<int>> group;
+        // Group the vertices that are in the same component
+        for (int vertex = 0; vertex < s.size(); vertex++) {
+            int root = uf.find(vertex);
+            // Add the vertices corresponding to the component root
+            group[root].push_back(vertex);
+        }
+
+        // String to store the answer
+        string res(s.length(), ' ');
+        // Iterate over each component
+        for (auto component : group) {
+            vector<int> indices = component.second;
+
+            // Sort the characters in the group
+            vector<char> characters;
+            for (int index : indices) {
+                characters.push_back(s[index]);
+            }
+            sort(characters.begin(), characters.end());
+
+            // Store the sorted characters
+            for (int index = 0; index < indices.size(); index++) {
+                res[indices[index]] = characters[index];
+            }
+        }
+
         return res;
     }
 
