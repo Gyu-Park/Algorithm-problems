@@ -18,15 +18,9 @@ class Solution {
             uf.group(a[0], a[1]);
         }
 
-        uf.updateRoot();
-
         unordered_map<int, array<int, 26>> umap;
         for (int i = 0; i < s.size(); i++) {
-            // if (umap.find(uf.root[i]) == umap.end()) {
-            //     umap[uf.root[i]] = array<int>(26);
-            // } else {
-            umap[uf.root[i]][s[i] - 'a']++;
-            // }
+            umap[uf.find(i)][s[i] - 'a']++;
         }
 
         string res = "";
@@ -73,16 +67,6 @@ class Solution {
             } else {
                 root[yRoot] = xRoot;
                 rank[xRoot]++;
-            }
-        }
-
-        bool isConnected(int x, int y) {
-            return find(x) == find(y);
-        }
-
-        void updateRoot() {
-            for (int i = 0; i < root.size(); i++) {
-                find(i);
             }
         }
     };
