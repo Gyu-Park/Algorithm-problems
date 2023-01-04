@@ -108,4 +108,42 @@ class Solution {
             }
         }
     };
+
+    // dfs solution
+    static const int N = 100001;
+    vector<int> adj[N];
+    bool visited[N];
+
+    void dfs(vector<char>& characters, vector<int>& indices, int index, string& s) {
+        visited[index] = true;
+        characters.push_back(s[index]);
+        indices.push_back(index);
+        for (auto& vertex : adj[index]) {
+            if (!visited[vertex]) {
+                dfs(characters, indices, vertex, s);
+            }
+        }
+    }
+
+    string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
+        for (auto& pair : pairs) {
+            adj[pair[0]].push_back(pair[1]);
+            adj[pair[1]].push_back(pair[0]);
+        }
+
+        string res(s.size(), ' ');
+        for (int i = 0; i < s.size(); i++) {
+            if (!visited[i]) {
+                vector<char> characters;
+                vector<int> indices;
+                dfs(characters, indices, i, s);
+                sort(characters.begin(), characters.end());
+                sort(indices.begin(), indices.end());
+                for (int j = 0; j < indices.size(); j++) {
+                    res[indices[j]] = characters[j];
+                }
+            }
+        }
+        return res;
+    }
 };
