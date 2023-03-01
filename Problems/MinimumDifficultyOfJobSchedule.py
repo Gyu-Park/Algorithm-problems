@@ -40,3 +40,28 @@ class Solution:
             return best
 
         return dp(0, 1)
+    
+    # bottom-up approach
+    def minDifficulty2(self, jobDifficulty: List[int], d: int) -> int:
+        n = len(jobDifficulty)
+        if n < d:
+            return -1
+        
+        # states: jobs that are done, remaining days
+        
+        dp = [[float("inf")] * (d + 1) for _ in range(n)]
+
+        # base case
+        dp[-1][d] = jobDifficulty[-1]
+
+        for i in range(n - 2, -1, -1):
+            dp[i][d] = max(dp[i + 1][d], jobDifficulty[i])
+
+        for day in range(d - 1, 0, -1): # fix day
+            for i in range(day - 1, n - (d - day)): # fix the beginning task in the day
+                hardest = 0
+                for j in range(i, n - (d - day)): # loop through from the beginning to max task that can be done
+                    hardest = max(hardest, jobDifficulty[j]) # determine the hardest task among chosen tasks
+                    dp[i][day] = min(dp[i][day], hardest + dp[j + 1][day + 1]) # update
+
+        return dp[0][1]
