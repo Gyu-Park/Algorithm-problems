@@ -1,3 +1,7 @@
+from functools import lru_cache
+from typing import List
+
+
 class Solution:
     def minDifficulty(self, jobDifficulty: List[int], d: int) -> int:
         # states: day d, jobs done
