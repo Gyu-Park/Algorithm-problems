@@ -42,7 +42,7 @@ class Solution {
         return res;
     }
 
-    // Kruskal's algorithm with union find
+    // Kruskal's algorithm with union find (disjoint set)
     vector<int> uf;
     int minCostToSupplyWater(int n, vector<int>& wells, vector<vector<int>>& pipes) {
         uf.resize(n + 1, 0);
