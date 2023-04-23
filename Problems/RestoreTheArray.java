@@ -15,16 +15,18 @@ public class RestoreTheArray {
         if (memo[index] > 0)
             return memo[index];
 
-        long ret = 0;
-        for (int i = index + 1; i <= n; i++) {
-            if (s.charAt(index) != '0' && Long.parseLong(s.substring(index, i)) <= k)
-                ret += helper(s, k, i);
+        int ret = 0;
+        long num = 0;
+        for (int i = index; i < n; i++) {
+            num = num * 10 + s.charAt(i) - '0';
+            if (s.charAt(index) != '0' && num <= k)
+                ret += helper(s, k, i + 1);
             else
                 break;
             ret %= MOD;
         }
 
-        memo[index] = (int) ret;
+        memo[index] = ret;
         return memo[index];
     }
 
